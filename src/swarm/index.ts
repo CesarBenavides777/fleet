@@ -151,7 +151,9 @@ async function up(names: string[], opts: { dryRun?: boolean }): Promise<void> {
       }
     }
 
-    writeFileSync(join(wtPath, "TASK.md"), taskText(root, t));
+    // Write TASK.md where the agent actually starts, so "read TASK.md in this
+    // directory" is always correct whether or not a `cwd` subdir is set.
+    writeFileSync(join(startCwd, "TASK.md"), taskText(root, t));
 
     const open = sh(CMUX_BIN, [
       "new-workspace",
