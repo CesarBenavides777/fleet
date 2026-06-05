@@ -1,14 +1,26 @@
 # fleet
 
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 Portable, token-lean CLI for multi-agent work across any git repo. Two commands,
-zero servers. Drops into Ada, Agent.ai, Birddogit, Cesar.ai — or anything else.
+zero servers. Drops into any monorepo or polyrepo — or installs as an agent skill.
+
+## Install
 
 ```bash
-# install once (global)
-cd fleet && bun install && bun link
-
+# as a CLI (requires Bun)
+git clone https://github.com/CesarBenavides777/fleet && cd fleet
+bun install && bun link        # puts `fleet` on PATH
 fleet --help
 ```
+
+```bash
+# as an agent skill (skills.sh) — exposes `fleet swarm` / `fleet doctor` to your agent
+npx skills.sh add CesarBenavides777/fleet
+```
+
+> Requires [Bun](https://bun.sh). `swarm` also needs [cmux](https://cmux.sh)
+> (override the binary with `CMUX_BIN`).
 
 ## `fleet swarm` — parallel agents over isolated worktrees
 
@@ -70,5 +82,9 @@ interactive TTY, device-code on SSH/headless. Tokens persist to Infisical when a
 
 ---
 
-Extracted from Cesar-AI's `packages/cli`; kept dependency-light (commander, clack,
-picocolors, yaml) and self-contained so the same binary serves every workspace.
+Dependency-light (commander, clack, picocolors, yaml) and self-contained, so the
+same binary serves every workspace.
+
+## License
+
+MIT © Cesar Benavides — see [LICENSE](./LICENSE).

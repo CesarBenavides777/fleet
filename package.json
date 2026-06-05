@@ -1,11 +1,42 @@
 {
-  "name": "fleet",
+  "name": "@cesarbenavides/fleet",
   "version": "0.1.0",
-  "description": "Portable agent-swarm launcher + connection doctor (cmux + git worktrees + OAuth)",
+  "description": "Portable agent-swarm launcher + connection doctor: parallel agents over git worktrees & cmux tabs, plus OAuth/MCP connection auto-fix. Works in any git repo.",
+  "keywords": [
+    "agent",
+    "claude",
+    "cli",
+    "cmux",
+    "doctor",
+    "git-worktree",
+    "mcp",
+    "multi-agent",
+    "oauth",
+    "swarm"
+  ],
+  "homepage": "https://github.com/CesarBenavides777/fleet#readme",
+  "bugs": {
+    "url": "https://github.com/CesarBenavides777/fleet/issues"
+  },
+  "license": "MIT",
+  "author": "Cesar Benavides <cbenavides2527@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CesarBenavides777/fleet.git"
+  },
   "bin": {
     "fleet": "./src/index.ts"
   },
+  "files": [
+    "src",
+    "README.md",
+    "SKILL.md",
+    "LICENSE"
+  ],
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "check-types": "tsc --noEmit"
   },
@@ -18,5 +49,8 @@
   "devDependencies": {
     "@types/node": "^22.15.3",
     "typescript": "5.9.2"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
   }
 }
