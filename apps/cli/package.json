@@ -4,7 +4,6 @@
   "description": "Portable agent-swarm launcher + connection doctor: parallel agents over git worktrees & cmux/tmux surfaces, a live board + status/comms bus, plus OAuth/MCP connection auto-fix. Works in any git repo.",
   "keywords": [
     "agent",
-    "claude",
     "cli",
     "cmux",
     "tmux",

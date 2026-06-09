@@ -1,11 +1,11 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to coding agents working in this repository.
 
 ## What this is
 
-`fleet` is a Bun-native CLI, published as a Claude Code skill, with two jobs: **launch
-parallel Claude agents** across isolated git worktrees + cmux/tmux surfaces (with a live
+`fleet` is a Bun-native CLI, published as an agent skill, with two jobs: **launch
+parallel coding agents** across isolated git worktrees + cmux/tmux surfaces (with a live
 board and a file-based status/comms bus), and **diagnose/repair service connections**
 (OAuth tokens, PATs, MCP servers). It runs in any git repo via a small per-repo `.fleet/`
 config — nothing is hardcoded to one project. The repo is a **Turborepo monorepo** being
@@ -54,7 +54,7 @@ coordination is filesystem-based and pull-based:
 
 - **cmux surfaces, not workspaces.** Agents launch via `new-surface` (a tab), then `send` (types
   the command) + `send-key Enter` (submits, with a double-Enter guard), staggered ~8s to avoid
-  Anthropic 529/Overloaded. This lives in `packages/swarm/src/launch.ts` over `@fleet/mux`. Using
+  529/overloaded errors from the agent's API. This lives in `packages/swarm/src/launch.ts` over `@fleet/mux`. Using
   `new-workspace` (a sidebar workspace) is the classic bug — don't reintroduce it.
 - **Permission boundary.** The harness blocks an orchestrator agent from bulk-launching agents.
   So `fleet swarm prepare` (agent-safe: worktrees, `.swarm/`, seed `.mcp.json`, bus init, start

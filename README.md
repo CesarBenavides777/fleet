@@ -6,8 +6,8 @@
 
 Parallel agent swarms with better ergonomics — one git worktree + one cmux/tmux **surface** per
 thread, a live local **board**, and a file-based **status/comms bus** — plus a **connection
-doctor** for OAuth/PAT/MCP. Works in any git repo. A **Turborepo** monorepo, published as a
-Claude Code skill.
+doctor** for OAuth/PAT/MCP. Works in any git repo. A **Turborepo** monorepo, published as an
+agent skill.
 
 ## Install
 
@@ -103,7 +103,7 @@ packages/identity     OAuth/PAT bootstrap
 ```
 
 Bun workspaces + Turborepo. `bunx turbo run check-types` to type-check all packages; Bun runs the
-`.ts` directly so there's no dev build step. See [CLAUDE.md](./CLAUDE.md) for architecture details.
+`.ts` directly so there's no dev build step. See [AGENTS.md](./AGENTS.md) for architecture details.
 
 ## License
 
