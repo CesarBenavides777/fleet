@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import { createReadStream, existsSync, openSync, statSync } from "node:fs";
 import { createServer } from "node:http";
-import { extname, join, normalize } from "node:path";
+import { extname, join, normalize, sep } from "node:path";
 import { sh } from "@fleet/core";
 
 const MIME: Record<string, string> = {
@@ -13,10 +13,11 @@ const MIME: Record<string, string> = {
   ".svg": "image/svg+xml",
 };
 
+// The board fetches same-origin relative URLs, so no CORS header is needed —
+// omitting it keeps other origins from reading the local status/comms files.
 const NO_CACHE = {
   "Cache-Control": "no-store, no-cache, must-revalidate",
   Pragma: "no-cache",
-  "Access-Control-Allow-Origin": "*",
 };
 
 /** Block until the no-cache static server for `.swarm/` exits. Bound to 127.0.0.1. */
@@ -24,9 +25,12 @@ export function serveForeground(swarmDir: string, port: number): void {
   const server = createServer((req, res) => {
     const urlPath = decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/");
     const rel = urlPath === "/" ? "/board.html" : urlPath;
-    // Contain within swarmDir — reject path traversal.
+    // Contain within swarmDir — reject path traversal. Anchor the prefix at a
+    // separator so a sibling like "<swarmDir>-evil" can't bypass the check.
     const filePath = normalize(join(swarmDir, rel));
-    if (!filePath.startsWith(swarmDir) || !existsSync(filePath) || !statSync(filePath).isFile()) {
+    const safeRoot = swarmDir.endsWith(sep) ? swarmDir : swarmDir + sep;
+    const inside = filePath === swarmDir || filePath.startsWith(safeRoot);
+    if (!inside || !existsSync(filePath) || !statSync(filePath).isFile()) {
       res.writeHead(404, NO_CACHE);
       res.end("not found");
       return;

@@ -61,8 +61,12 @@ function tile(thread, st) {
     .map((s) => `<li class="${esc(s.status)}">${STEP_ICON[s.status] || "○"} ${esc(s.title)}</li>`)
     .join("");
   const blockers = (st && st.blockers) || [];
-  const prHtml =
-    st && st.pr ? `<div class="pr">PR <a href="${esc(st.pr)}" target="_blank">${esc(st.pr)}</a></div>` : "";
+  const prSafe = st && st.pr && /^https?:\/\//i.test(String(st.pr)) ? st.pr : null;
+  const prHtml = st && st.pr
+    ? prSafe
+      ? `<div class="pr">PR <a href="${esc(prSafe)}" target="_blank" rel="noopener noreferrer">${esc(prSafe)}</a></div>`
+      : `<div class="pr">PR ${esc(st.pr)}</div>`
+    : "";
   return `
     <div class="${cls}" style="border-left-color:${esc(color)}">
       <div class="tile-head">
