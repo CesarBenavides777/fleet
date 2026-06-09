@@ -93,7 +93,7 @@ export async function runBootstrap(provider: Provider, accountId: string): Promi
 async function runListProvider(provider: Provider): Promise<void> {
   const ctx = detectInfisicalContext();
   if (!ctx) {
-    p.log.warn("No .infisical.json — listing relies on Infisical context. cd into apps/agents.");
+    p.log.warn("No .infisical.json in cwd — listing needs an Infisical-bound workspace.");
     return;
   }
   const r = spawnSync(
@@ -121,7 +121,7 @@ async function runWhoami(provider: Provider, accountId: string): Promise<void> {
   const token = process.env[tokenVar];
   if (!token) {
     p.log.error(
-      `${tokenVar} not in current env. Bootstrap/check with: fleet identity ${provider} whoami ${accountId}`,
+      `${tokenVar} not in current env. Bootstrap it with: fleet identity ${provider} bootstrap ${accountId}`,
     );
     process.exit(1);
   }

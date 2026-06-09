@@ -29,7 +29,8 @@ const TYPE_COLOR: Record<CommsType, (s: string) => string> = {
 function renderMsg(m: CommsMessage): string {
   const tag = (TYPE_COLOR[m.type] ?? pc.white)(m.type.padEnd(8));
   const refs = m.refs?.length ? pc.dim(` [${m.refs.join(", ")}]`) : "";
-  return `${pc.dim(m.ts)} ${tag} ${pc.bold(m.from)}→${m.to}: ${m.body}${refs}`;
+  const ts = m.ts.slice(0, 19); // trim ms for display; full ts is the sort key
+  return `${pc.dim(ts)} ${tag} ${pc.bold(m.from)}→${m.to}: ${m.body}${refs}`;
 }
 
 export const busCommand = new Command("bus").description(

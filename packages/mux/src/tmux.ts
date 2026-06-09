@@ -16,7 +16,9 @@ function ensureSession(): void {
 
 function newSurface({ name }: NewSurfaceOpts): SurfaceRef {
   ensureSession();
-  const r = sh("tmux", ["new-window", "-t", SESSION, "-n", name, "-P", "-F", "#{window_id}"]);
+  // -a = insert AFTER the current window so tmux picks the next free index;
+  // a bare `-t SESSION` targets the existing window 0 and fails "index in use".
+  const r = sh("tmux", ["new-window", "-a", "-t", SESSION, "-n", name, "-P", "-F", "#{window_id}"]);
   if (!r.ok) throw new Error(`tmux new-window failed: ${r.out}`);
   return { id: r.out.trim() };
 }

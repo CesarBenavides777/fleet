@@ -86,7 +86,7 @@ function tile(thread, st) {
 function msgEl(m) {
   const refs = m.refs && m.refs.length ? ` [${m.refs.map(esc).join(", ")}]` : "";
   return `<div class="msg ${esc(m.type)}">
-    <span class="who">${esc(m.from)}→${esc(m.to)}</span> <span class="t">${esc(m.ts)}</span>
+    <span class="who">${esc(m.from)}→${esc(m.to)}</span> <span class="t">${esc(String(m.ts).slice(0, 19))}</span>
     <div>${esc(m.body)}${refs}</div>
   </div>`;
 }

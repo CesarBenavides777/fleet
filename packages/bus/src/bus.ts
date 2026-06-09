@@ -17,9 +17,14 @@ export interface SwarmPaths {
   configPath: string;
 }
 
-/** ISO-8601 UTC truncated to seconds, e.g. "2026-06-09T12:00:00Z". */
+/** ISO-8601 UTC truncated to seconds, e.g. "2026-06-09T12:00:00Z" (status display). */
 export function utcSeconds(): string {
   return new Date().toISOString().replace(/\.\d+Z$/, "Z");
+}
+
+/** Full-precision ISO-8601 UTC, e.g. "2026-06-09T12:00:00.123Z" (comms ordering key). */
+export function utcMillis(): string {
+  return new Date().toISOString();
 }
 
 /**
@@ -137,7 +142,9 @@ export function updateStatus(paths: SwarmPaths, id: string, patch: Partial<Statu
 /** Append one message to the sender's own outbox. */
 export function postMessage(paths: SwarmPaths, msg: Omit<CommsMessage, "ts">): CommsMessage {
   mkdirSync(paths.commsDir, { recursive: true });
-  const full: CommsMessage = { ts: utcSeconds(), ...msg };
+  // Millisecond precision so same-second messages still order correctly and the
+  // board's "answered ask" check (answer.ts > ask.ts) holds for rapid exchanges.
+  const full: CommsMessage = { ts: utcMillis(), ...msg };
   appendFileSync(commsPath(paths, msg.from), `${JSON.stringify(full)}\n`);
   return full;
 }

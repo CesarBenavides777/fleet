@@ -1,6 +1,7 @@
 export * from "./types.js";
 export {
   utcSeconds,
+  utcMillis,
   resolveSwarmDir,
   swarmPaths,
   readThreadSeeds,
