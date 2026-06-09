@@ -2,6 +2,8 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
+![fleet demo](docs/demo.gif)
+
 Parallel agent swarms with better ergonomics — one git worktree + one cmux/tmux **surface** per
 thread, a live local **board**, and a file-based **status/comms bus** — plus a **connection
 doctor** for OAuth/PAT/MCP. Works in any git repo. A **Turborepo** monorepo, published as a
