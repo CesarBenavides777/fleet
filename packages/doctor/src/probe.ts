@@ -1,8 +1,7 @@
-import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { envVarName } from "../identity/infisical.js";
-import type { Provider } from "../identity/types.js";
+import { onPath } from "@fleet/core";
+import { envVarName, type Provider } from "@fleet/identity";
 
 // Read-only health probes for connections: identity tokens (OAuth / PATs) and
 // configured MCP servers. Each probe returns a structured result so the doctor
@@ -155,8 +154,7 @@ export async function probeMcp(name: string, server: McpServer): Promise<ProbeRe
     }
   }
   if (server.command) {
-    const which = spawnSync("which", [server.command], { encoding: "utf8" });
-    return which.status === 0
+    return onPath(server.command)
       ? { ...base, status: "ok", detail: `${server.command} on PATH` }
       : { ...base, status: "unreachable", detail: `${server.command} not on PATH` };
   }

@@ -2,3 +2,9 @@ node_modules/
 *.log
 .DS_Store
 bun.lock
+dist/
+.turbo/
+
+# Generated swarm runtime (per target repo) + worktrees
+.swarm/
+*-worktrees/

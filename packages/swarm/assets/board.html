@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🐝 fleet board</title>
+    <link rel="stylesheet" href="board.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <h1>🐝 fleet board</h1>
+      <div class="overall">
+        <div class="overall-track"><div id="overallFill" class="overall-fill"></div></div>
+        <span id="overallText" class="overall-text">—</span>
+      </div>
+      <span id="clock" class="clock"></span>
+    </header>
+    <main class="grid">
+      <section id="tiles" class="tiles"></section>
+      <aside class="rail">
+        <h2>unanswered asks</h2>
+        <div id="asks" class="asks"></div>
+        <h2>comms</h2>
+        <div id="feed" class="feed"></div>
+      </aside>
+    </main>
+    <script src="board.js"></script>
+  </body>
+</html>

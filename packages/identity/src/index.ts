@@ -216,6 +216,12 @@ async function runRevoke(provider: Provider, accountId: string): Promise<void> {
   );
 }
 
+// Public surface for other packages (e.g. @fleet/doctor) that read identities,
+// resolve token env-var names, or re-bootstrap a broken provider.
+export { loadIdentitiesYaml, scopesFor } from "./yaml-loader.js";
+export { envVarName, detectInfisicalContext } from "./infisical.js";
+export type { Provider, BootstrapResult, IdentitiesYaml } from "./types.js";
+
 export const identityCommand = new Command("identity").description(
   "Bootstrap and manage per-account identities (google/github/figma/vercel)",
 );

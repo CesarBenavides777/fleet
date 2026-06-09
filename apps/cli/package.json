@@ -1,0 +1,56 @@
+{
+  "name": "@cesarbenavides/fleet",
+  "version": "0.1.0",
+  "description": "Portable agent-swarm launcher + connection doctor: parallel agents over git worktrees & cmux/tmux surfaces, a live board + status/comms bus, plus OAuth/MCP connection auto-fix. Works in any git repo.",
+  "keywords": [
+    "agent",
+    "claude",
+    "cli",
+    "cmux",
+    "tmux",
+    "doctor",
+    "git-worktree",
+    "mcp",
+    "multi-agent",
+    "oauth",
+    "swarm"
+  ],
+  "homepage": "https://github.com/CesarBenavides777/fleet#readme",
+  "bugs": {
+    "url": "https://github.com/CesarBenavides777/fleet/issues"
+  },
+  "license": "MIT",
+  "author": "Cesar Benavides <cbenavides2527@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CesarBenavides777/fleet.git"
+  },
+  "type": "module",
+  "bin": {
+    "fleet": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bun build ./src/index.ts --target=bun --outfile dist/index.js && mkdir -p dist/assets && cp -R ../../packages/swarm/assets/. dist/assets/ && chmod +x dist/index.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.0",
+    "@fleet/bus": "workspace:*",
+    "@fleet/core": "workspace:*",
+    "@fleet/doctor": "workspace:*",
+    "@fleet/identity": "workspace:*",
+    "@fleet/swarm": "workspace:*",
+    "commander": "^13.1.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "5.9.2"
+  }
+}

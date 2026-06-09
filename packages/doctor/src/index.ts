@@ -1,10 +1,8 @@
-import { spawnSync } from "node:child_process";
 import { Command } from "commander";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { loadIdentitiesYaml } from "../identity/yaml-loader.js";
-import { runBootstrap } from "../identity/index.js";
-import type { Provider } from "../identity/types.js";
+import { gitRootOrCwd } from "@fleet/core";
+import { loadIdentitiesYaml, runBootstrap, type Provider } from "@fleet/identity";
 import {
   detectSecretBackend,
   probeIdentity,
@@ -19,11 +17,6 @@ import {
 // by re-running the OAuth/PAT bootstrap flow.
 
 const PROVIDERS: Provider[] = ["google", "github", "figma", "vercel"];
-
-function repoRoot(): string {
-  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf8" });
-  return r.status === 0 ? r.stdout.trim() : process.cwd();
-}
 
 function enumerateIdentities(root: string): Array<{ provider: Provider; accountId: string }> {
   const yaml = loadIdentitiesYaml(root) ?? loadIdentitiesYaml(process.cwd());
@@ -48,8 +41,8 @@ function line(r: ProbeResult): string {
   return `  ${MARK[r.status].padEnd(20)} ${pc.bold(r.target.padEnd(22))} ${pc.dim(r.detail)}`;
 }
 
-async function doctor(opts: { fix?: boolean; json?: boolean }): Promise<void> {
-  const root = repoRoot();
+export async function doctor(opts: { fix?: boolean; json?: boolean }): Promise<void> {
+  const root = gitRootOrCwd();
   const results: ProbeResult[] = [];
 
   const backend = detectSecretBackend(root);
