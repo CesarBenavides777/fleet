@@ -73,3 +73,68 @@ export const Fade: React.FC<{ len: number; children: React.ReactNode; style?: Re
   });
   return <div style={{ opacity, width: "100%", height: "100%", ...style }}>{children}</div>;
 };
+
+/** A macOS-style terminal traffic-light dot. */
+export const Dot: React.FC<{ c: string }> = ({ c }) => (
+  <span style={{ width: 12, height: 12, borderRadius: 12, background: c, display: "inline-block" }} />
+);
+
+/** A terminal window card with a titlebar; body holds prompt/output lines. */
+export const TerminalCard: React.FC<{
+  title?: string;
+  width?: number;
+  fontSize?: number;
+  children: React.ReactNode;
+}> = ({ title = "fleet — zsh", width = 1040, fontSize = 23, children }) => (
+  <div
+    style={{
+      width,
+      background: theme.panel,
+      border: `1px solid ${theme.line}`,
+      borderRadius: 14,
+      boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
+      overflow: "hidden",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "12px 16px",
+        borderBottom: `1px solid ${theme.line}`,
+      }}
+    >
+      <Dot c={theme.red} />
+      <Dot c={theme.yellow} />
+      <Dot c={theme.green} />
+      <span style={{ color: theme.dim, marginLeft: 10, fontSize: 16 }}>{title}</span>
+    </div>
+    <div style={{ padding: "20px 28px", fontSize, lineHeight: 1.5, color: theme.fg }}>{children}</div>
+  </div>
+);
+
+/** A `$ `-prefixed command line. */
+export const Prompt: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div style={{ marginTop: 6 }}>
+    <span style={{ color: theme.green }}>$ </span>
+    {children}
+  </div>
+);
+
+/** Centered full-frame stage on the app background. */
+export const Stage: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div
+    style={{
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: theme.bg,
+      fontFamily: theme.mono,
+    }}
+  >
+    {children}
+  </div>
+);

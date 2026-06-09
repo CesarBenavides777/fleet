@@ -11,6 +11,7 @@ export const Root: React.FC = () => {
       fps={30}
       width={1280}
       height={720}
+      // ~30s walkthrough; durationInFrames lives in FleetDemo.
     />
   );
 };
